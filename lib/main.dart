@@ -28,11 +28,11 @@ class CalculatorScreen extends StatefulWidget {
 }
 
 class _CalculatorScreenState extends State<CalculatorScreen> {
-  @override
   String firstValue = "";
   String operator = "";
   String secondValue = "";
 
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -44,12 +44,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 reverse: true,
                 child: Container(
                   alignment: Alignment.bottomRight,
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Text(
                     "$firstValue$operator$secondValue".isEmpty
                         ? "0"
                         : "$firstValue$operator$secondValue",
-                    style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.end,
                   ),
                 )),
@@ -59,7 +59,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             children: Btn.buttonValues
                 .map(
                   (value) => SizedBox(
-                      width: value == Btn.n0 ? size.width / 2 : size.width / 4,
+                      width: value == Btn.number0 ? size.width / 2 : size.width / 4,
                       height: size.width / 5,
                       child: btn(value)),
                 )
@@ -93,47 +93,47 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   }
 
   Color setColor(value) {
-    return [Btn.del, Btn.clr].contains(value)
+    return [Btn.backspace, Btn.clear].contains(value)
         ? Colors.orangeAccent
         : [
-            Btn.per,
+            Btn.percent,
             Btn.multiply,
             Btn.divide,
             Btn.subtract,
             Btn.add,
-            Btn.calculate
+            Btn.equal
           ].contains(value)
             ? Colors.lightGreen
             : Colors.black.withAlpha(20);
   }
   Color setTextColor(value) {
-    return [Btn.del, Btn.clr, Btn.per,
+    return [Btn.backspace, Btn.clear, Btn.percent,
       Btn.multiply,
       Btn.divide,
       Btn.subtract,
       Btn.add,
-      Btn.calculate].contains(value)
+      Btn.equal].contains(value)
         ? Colors.white
         : Colors.black;
   }
 
 
   void onBtnTap(String value) {
-    if (value == Btn.del) {
+    if (value == Btn.backspace) {
       delete();
       return;
     }
-    if (value == Btn.clr) {
+    if (value == Btn.clear) {
       clear();
       return;
     }
 
-    if (value == Btn.per) {
+    if (value == Btn.percent) {
       toPercent();
       return;
     }
 
-    if (value == Btn.calculate) {
+    if (value == Btn.equal) {
       equal();
       return;
     }
@@ -142,9 +142,15 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   }
 
   void equal() {
-    if (firstValue.isEmpty) return;
-    if (operator.isEmpty) return;
-    if (secondValue.isEmpty) return;
+    if (firstValue.isEmpty) {
+      return;
+    }
+    if (operator.isEmpty) {
+      return;
+    }
+    if (secondValue.isEmpty) {
+      return;
+    }
 
     final double value1 = double.parse(firstValue);
     final double value2 = double.parse(secondValue);
@@ -226,7 +232,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       if (value == Btn.dot && firstValue.contains(Btn.dot)) {
         return;
       }
-      if (value == Btn.dot && (firstValue.isEmpty || firstValue == Btn.n0)) {
+      if (value == Btn.dot && (firstValue.isEmpty || firstValue == Btn.number0)) {
         value = "0.";
       }
       firstValue += value;
@@ -234,7 +240,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       if (value == Btn.dot && secondValue.contains(Btn.dot)) {
         return;
       }
-      if (value == Btn.dot && (secondValue.isEmpty || secondValue == Btn.n0)) {
+      if (value == Btn.dot && (secondValue.isEmpty || secondValue == Btn.number0)) {
         value = "0.";
       }
       secondValue += value;
@@ -244,46 +250,45 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 }
 
 class Btn {
-  static const String del = "<-";
-  static const String clr = "C";
-  static const String per = "%";
+  static const String number0 = "0";
+  static const String number1 = "1";
+  static const String number2 = "2";
+  static const String number3 = "3";
+  static const String number4 = "4";
+  static const String number5 = "5";
+  static const String number6 = "6";
+  static const String number7 = "7";
+  static const String number8 = "8";
+  static const String number9 = "9";
+  static const String backspace = "<-";
+  static const String clear = "C";
+  static const String percent = "%";
   static const String multiply = "×";
   static const String divide = "÷";
   static const String add = "+";
   static const String subtract = "-";
-  static const String calculate = "=";
+  static const String equal = "=";
   static const String dot = ".";
 
-  static const String n0 = "0";
-  static const String n1 = "1";
-  static const String n2 = "2";
-  static const String n3 = "3";
-  static const String n4 = "4";
-  static const String n5 = "5";
-  static const String n6 = "6";
-  static const String n7 = "7";
-  static const String n8 = "8";
-  static const String n9 = "9";
-
   static const List<String> buttonValues = [
-    del,
-    clr,
-    per,
+    backspace,
+    clear,
+    percent,
     multiply,
-    n7,
-    n8,
-    n9,
+    number7,
+    number8,
+    number9,
     divide,
-    n4,
-    n5,
-    n6,
+    number4,
+    number5,
+    number6,
     subtract,
-    n1,
-    n2,
-    n3,
+    number1,
+    number2,
+    number3,
     add,
     dot,
-    n0,
-    calculate,
+    number0,
+    equal,
   ];
 }
