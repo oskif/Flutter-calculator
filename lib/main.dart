@@ -49,7 +49,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     "$firstValue$operator$secondValue".isEmpty
                         ? "0"
                         : "$firstValue$operator$secondValue",
-                    style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 48, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.end,
                   ),
                 )),
@@ -59,7 +60,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             children: Btn.buttonValues
                 .map(
                   (value) => SizedBox(
-                      width: value == Btn.number0 ? size.width / 2 : size.width / 4,
+                      width: value == Btn.number0
+                          ? size.width / 2
+                          : size.width / 4,
                       height: size.width / 5,
                       child: btn(value)),
                 )
@@ -83,10 +86,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 child: Text(
               value,
               style: TextStyle(
-                fontSize: 20,
-                color: setTextColor(value),
-                fontWeight: FontWeight.bold
-              ),
+                  fontSize: 20,
+                  color: setTextColor(value),
+                  fontWeight: FontWeight.bold),
             ))),
       ),
     );
@@ -106,17 +108,21 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ? Colors.lightGreen
             : Colors.black.withAlpha(20);
   }
+
   Color setTextColor(value) {
-    return [Btn.backspace, Btn.clear, Btn.percent,
+    return [
+      Btn.backspace,
+      Btn.clear,
+      Btn.percent,
       Btn.multiply,
       Btn.divide,
       Btn.subtract,
       Btn.add,
-      Btn.equal].contains(value)
+      Btn.equal
+    ].contains(value)
         ? Colors.white
         : Colors.black;
   }
-
 
   void onBtnTap(String value) {
     if (value == Btn.backspace) {
@@ -232,7 +238,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       if (value == Btn.dot && firstValue.contains(Btn.dot)) {
         return;
       }
-      if (value == Btn.dot && (firstValue.isEmpty || firstValue == Btn.number0)) {
+      if (value == Btn.dot &&
+          (firstValue.isEmpty || firstValue == Btn.number0)) {
         value = "0.";
       }
       firstValue += value;
@@ -240,7 +247,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       if (value == Btn.dot && secondValue.contains(Btn.dot)) {
         return;
       }
-      if (value == Btn.dot && (secondValue.isEmpty || secondValue == Btn.number0)) {
+      if (value == Btn.dot &&
+          (secondValue.isEmpty || secondValue == Btn.number0)) {
         value = "0.";
       }
       secondValue += value;
