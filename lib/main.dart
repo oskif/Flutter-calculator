@@ -173,7 +173,16 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         result = value1 * value2;
         break;
       case Btn.divide:
-        result = value1 / value2;
+        if (value2 == 0) {
+          const snackBar = SnackBar(
+            content: Text("Can't divide by 0"),
+            duration: Duration(seconds: 2),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          result = value2;
+        } else {
+          result = value1/value2;
+        }
         break;
       default:
     }
@@ -232,24 +241,47 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       if (operator.isNotEmpty && secondValue.isNotEmpty) {
         equal();
       }
-      operator = value;
+      if (firstValue.isEmpty) {
+        firstValue = '0';
+      }
+      if (double.tryParse(firstValue) == 0) {
+        firstValue = '0';
+      }
       operator = value;
     } else if (firstValue.isEmpty || operator.isEmpty) {
       if (value == Btn.dot && firstValue.contains(Btn.dot)) {
         return;
       }
-      if (value == Btn.dot &&
-          (firstValue.isEmpty || firstValue == Btn.number0)) {
-        value = "0.";
+      if (value == Btn.number0 && firstValue == '0') {
+        return;
+      }
+      if (firstValue == '0') {
+        firstValue = '';
+      }
+      if (value == Btn.dot) {
+        if (firstValue == '0') {
+          value = '.';
+        } else if (firstValue.isEmpty) {
+          value = '0.';
+        }
       }
       firstValue += value;
     } else if (secondValue.isEmpty || operator.isNotEmpty) {
       if (value == Btn.dot && secondValue.contains(Btn.dot)) {
         return;
       }
-      if (value == Btn.dot &&
-          (secondValue.isEmpty || secondValue == Btn.number0)) {
-        value = "0.";
+      if (value == Btn.number0 && secondValue == '0') {
+        return;
+      }
+      if (secondValue == '0') {
+        secondValue = '';
+      }
+      if (value == Btn.dot) {
+        if (secondValue == '0') {
+          value = '.';
+        } else if (secondValue.isEmpty) {
+          value = '0.';
+        }
       }
       secondValue += value;
     }
