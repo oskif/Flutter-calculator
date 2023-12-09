@@ -63,7 +63,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       width: value == Btn.number0
                           ? size.width / 2
                           : size.width / 4,
-                      height: size.width / 5,
+                      height: size.height / 9,
                       child: btn(value)),
                 )
                 .toList(),
